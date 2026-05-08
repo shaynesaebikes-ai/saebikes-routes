@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.65">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width,initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;SA eBikes - Route Admin&lt;/title&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">:root{--green:#405B30;--green-dk:#2E4220;--cream:#F7F4EF;--cream-dk:#EBE6DA;--bdr:#DDD8CC;--text:#1A1A1A;--text-m:#4A4540;--text-l:#8C8478;--white:#fff;--red:#C0392B;}</p>
+<p class="p1">*{box-sizing:border-box;margin:0;padding:0;}</p>
+<p class="p1">body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}</p>
+<p class="p1">.tbar{background:var(--green);padding:14px 24px;display:flex;align-items:center;gap:14px;}</p>
+<p class="p1">.tbar img{height:32px;}</p>
+<p class="p1">.tbar h1{font-size:16px;font-weight:600;color:#fff;}</p>
+<p class="p1">.tbar span{font-size:12px;color:rgba(255,255,255,.5);}</p>
+<p class="p1">.main{max-width:860px;margin:0 auto;padding:28px 20px 60px;}</p>
+<p class="p1">.sec{background:var(--white);border-radius:14px;border:1px solid var(--bdr);margin-bottom:24px;overflow:hidden;}</p>
+<p class="p1">.shead{padding:16px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}</p>
+<p class="p1">.shead h2{font-size:15px;font-weight:600;}</p>
+<p class="p1">.shead p{font-size:12px;color:var(--text-l);margin-top:2px;}</p>
+<p class="p1">.sbody{padding:20px;}</p>
+<p class="p1">.arow{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid var(--bdr);background:var(--white);}</p>
+<p class="p1">.arow:last-child{border-bottom:none;}</p>
+<p class="p1">.arow.drag-over{background:#e8f5e0;}</p>
+<p class="p1">.dhdl{color:var(--text-l);cursor:grab;flex-shrink:0;font-size:20px;user-select:none;line-height:1;padding:4px 4px 0;}</p>
+<p class="p1">.dhdl:active{cursor:grabbing;}</p>
+<p class="p1">.rcbar{width:4px;min-height:40px;border-radius:2px;flex-shrink:0;margin-top:2px;}</p>
+<p class="p1">.arinfo{flex:1;min-width:0;}</p>
+<p class="p1">.arname{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}</p>
+<p class="p1">.dchip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;}</p>
+<p class="p1">.d-easy{background:#E8F5E0;color:#3A6B28;}.d-easy-moderate{background:#FFF3E0;color:#8A5A00;}</p>
+<p class="p1">.d-moderate{background:#FAEEE8;color:#8A3A18;}.d-hard{background:#FAE8E8;color:#7B2828;}</p>
+<p class="p1">.armeta{font-size:11px;color:var(--text-l);margin-top:3px;}</p>
+<p class="p1">.aracts{display:flex;gap:6px;flex-shrink:0;margin-top:2px;}</p>
+<p class="p1">.btn{padding:5px 10px;border-radius:7px;font-size:12px;font-family:"DM Sans",sans-serif;cursor:pointer;border:1px solid var(--bdr);background:var(--white);color:var(--text-m);}</p>
+<p class="p1">.btn:hover{background:var(--cream);}</p>
+<p class="p1">.btn-red{border-color:#DDD;color:var(--red);}.btn-red:hover{background:#FDF0EE;border-color:var(--red);}</p>
+<p class="p1">.epanel{display:none;padding:12px 0 4px;}.epanel.open{display:block;}</p>
+<p class="p1">.erow{margin-bottom:14px;}</p>
+<p class="p1">.erow label{display:block;font-size:11px;font-weight:500;color:var(--text-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}</p>
+<p class="p1">.erow input,.erow textarea{width:100%;padding:9px 11px;border:1px solid var(--bdr);border-radius:8px;font-family:"DM Sans",sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;}</p>
+<p class="p1">.erow textarea{min-height:70px;resize:vertical;line-height:1.5;}</p>
+<p class="p1">.erow input:focus,.erow textarea:focus{border-color:var(--green);}</p>
+<p class="p1">.brow{display:flex;gap:6px;flex-wrap:wrap;}</p>
+<p class="p1">.obtn{padding:7px 12px;border-radius:8px;border:1px solid var(--bdr);background:var(--white);font-family:"DM Sans",sans-serif;font-size:12px;color:var(--text-m);cursor:pointer;}</p>
+<p class="p1">.obtn.sel{background:var(--green);color:#fff;border-color:var(--green);font-weight:500;}</p>
+<p class="p1">.csw{display:flex;gap:8px;flex-wrap:wrap;}</p>
+<p class="p1">.cswatch{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:border-color .12s,transform .12s;}</p>
+<p class="p1">.cswatch.sel{border-color:var(--text);transform:scale(1.15);}</p>
+<p class="p1">.poi-ed-list{display:flex;flex-direction:column;gap:7px;margin-top:8px;}</p>
+<p class="p1">.poi-ed-item{background:var(--cream);border:1px solid var(--bdr);border-radius:9px;padding:9px 12px;}</p>
+<p class="p1">.poi-ed-top{display:flex;align-items:center;gap:8px;}</p>
+<p class="p1">.poi-ed-name{font-size:13px;font-weight:500;flex:1;}</p>
+<p class="p1">.poi-ed-km{font-size:11px;color:var(--text-l);flex-shrink:0;}</p>
+<p class="p1">.poi-vis-toggle{display:flex;align-items:center;gap:6px;flex-shrink:0;}</p>
+<p class="p1">.toggle{position:relative;width:36px;height:20px;}</p>
+<p class="p1">.toggle input{opacity:0;width:0;height:0;}</p>
+<p class="p1">.tslider{position:absolute;inset:0;background:#ccc;border-radius:10px;cursor:pointer;transition:background .2s;}</p>
+<p class="p1">.tslider:before{content:"";position:absolute;width:14px;height:14px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;}</p>
+<p class="p1">.toggle input:checked + .tslider{background:var(--green);}</p>
+<p class="p1">.toggle input:checked + .tslider:before{transform:translateX(16px);}</p>
+<p class="p1">.vis-lbl{font-size:11px;color:var(--text-l);width:36px;}</p>
+<p class="p1">.poi-ed-types{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px;}</p>
+<p class="p1">.ptbtn{padding:3px 8px;border-radius:14px;border:1px solid var(--bdr);font-size:11px;background:var(--white);cursor:pointer;font-family:"DM Sans",sans-serif;}</p>
+<p class="p1">.ptbtn.sel{border-color:var(--green);background:var(--green);color:#fff;}</p>
+<p class="p1">.poi-ed-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;}</p>
+<p class="p1">.pvis-all-btns{display:flex;gap:6px;}</p>
+<p class="p1">.pvis-all-btn{font-size:11px;padding:3px 10px;border:1px solid var(--bdr);border-radius:6px;background:var(--cream);color:var(--text-l);cursor:pointer;}</p>
+<p class="p1">.pvis-all-btn:hover{background:var(--green);color:#fff;border-color:var(--green);}</p>
+<p class="p1">.poi-ed-desc{margin-top:7px;}</p>
+<p class="p1">.poi-ed-desc input{width:100%;padding:7px 10px;border:1px solid var(--bdr);border-radius:7px;font-family:"DM Sans",sans-serif;font-size:12px;color:var(--text);background:var(--white);outline:none;}</p>
+<p class="p1">.poi-ed-desc input:focus{border-color:var(--green);}</p>
+<p class="p1">.genwrap{padding:16px 20px 20px;}</p>
+<p class="p1">.genbtn{width:100%;background:var(--green);color:#fff;border:none;border-radius:10px;padding:14px;font-family:"DM Sans",sans-serif;font-size:15px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}</p>
+<p class="p1">.genbtn:hover{background:var(--green-dk);}</p>
+<p class="p1">.dropzone{border:2px dashed var(--bdr);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;background:var(--cream);}</p>
+<p class="p1">.dropzone.active{border-color:var(--green);background:#f0f8eb;}</p>
+<p class="p1">.dropzone svg{width:36px;height:36px;color:var(--text-l);margin-bottom:10px;}</p>
+<p class="p1">.dropzone p{font-size:14px;color:var(--text-m);}.dropzone span{font-size:12px;color:var(--text-l);margin-top:4px;display:block;}</p>
+<p class="p1">input[type=file]{display:none;}</p>
+<p class="p1">.wizard{display:none;}.wizard.show{display:block;}</p>
+<p class="p1">.wstep{margin-bottom:18px;}</p>
+<p class="p1">.wlbl{display:block;font-size:12px;font-weight:500;color:var(--text-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}</p>
+<p class="p1">.winput{width:100%;padding:10px 12px;border:1px solid var(--bdr);border-radius:8px;font-family:"DM Sans",sans-serif;font-size:14px;color:var(--text);background:var(--white);outline:none;}</p>
+<p class="p1">.wtxt{min-height:80px;resize:vertical;line-height:1.5;}</p>
+<p class="p1">.winput:focus,.wtxt:focus{border-color:var(--green);}</p>
+<p class="p1">.wpoied{margin-top:8px;display:flex;flex-direction:column;gap:7px;}</p>
+<p class="p1">.wpoi{background:var(--cream);border:1px solid var(--bdr);border-radius:9px;padding:9px 12px;}</p>
+<p class="p1">.wpoi-top{display:flex;align-items:center;gap:8px;}</p>
+<p class="p1">.wpoi-name{font-size:13px;font-weight:500;flex:1;}</p>
+<p class="p1">.wpoi-km{font-size:11px;color:var(--text-l);}</p>
+<p class="p1">.wpoi-types{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}</p>
+<p class="p1">.stbar{margin:0 0 14px;padding:12px 16px;border-radius:10px;font-size:13px;display:none;}</p>
+<p class="p1">.stbar.show{display:block;}</p>
+<p class="p1">.stbar.info{background:#E8F5E0;color:#2E5A1A;border:1px solid #B8DCA8;}</p>
+<p class="p1">.stbar.error{background:#FDF0EE;color:#8A1A1A;border:1px solid #E8B8B8;}</p>
+<p class="p1">.stbar.warn{background:#FFF3E0;color:#7A4A00;border:1px solid #DECA9A;}</p>
+<p class="p1">.pinfo{background:var(--cream);border:1px solid var(--bdr);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--text-m);margin-bottom:16px;line-height:1.6;}</p>
+<p class="p1">.pinfo strong{color:var(--text);}</p>
+<p class="p1">.addrow{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;}</p>
+<p class="p1">.addroute-btn{background:var(--green);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:500;cursor:pointer;}</p>
+<p class="p1">.addroute-btn:hover{background:var(--green-dk);}</p>
+<p class="p1">.cancel-btn{background:none;border:1px solid var(--bdr);border-radius:10px;padding:11px 18px;font-family:"DM Sans",sans-serif;font-size:14px;color:var(--text-m);cursor:pointer;}</p>
+<p class="p1">hr.div{border:none;border-top:1px solid var(--bdr);margin:18px 0;}</p>
+<p class="p1">.empty{padding:24px;text-align:center;color:var(--text-l);font-size:14px;}</p>
+<p class="p1">#drop-ov{display:none;position:fixed;inset:0;z-index:9999;background:rgba(64,91,48,.93);backdrop-filter:blur(8px);align-items:center;justify-content:center;flex-direction:column;gap:16px;}</p>
+<p class="p1">.howto{background:#E8F5E0;border:1px solid #B8DCA8;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:#2E5A1A;line-height:1.7;}</p>
+<p class="p1">.howto strong{display:block;margin-bottom:6px;font-size:14px;font-weight:600;}</p>
+<p class="p1">.howto ol{padding-left:18px;}</p>
+<p class="p1">.howto li{margin-bottom:2px;}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1">&lt;div class="tbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ccircle cx='16' cy='16' r='14' fill='white' fill-opacity='.2'/%3E%3C/svg%3E" alt="SA eBikes"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;Route Admin &lt;span&gt;— SA eBikes Ride Suggestions&lt;/span&gt;&lt;/h1&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">&lt;div class="main"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="howto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;strong&gt;How to update the live app&lt;/strong&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;ol&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;Make your changes below&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;Click &lt;strong&gt;Download routes.json&lt;/strong&gt;&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;Go to your Netlify site dashboard &amp;rarr; Deploys &amp;rarr; drag the downloaded file in&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;li&gt;Live in ~30 seconds&lt;/li&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/ol&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="sec"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="shead"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;&lt;h2&gt;Current Routes&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Drag to reorder &amp;middot; Edit details &amp;middot; Toggle POI visibility &amp;middot; Delete to remove&lt;/p&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="arl"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="genwrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="genbtn" onclick="saveRoutesJson()"&gt;&amp;#8595;&amp;nbsp; Download routes.json&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="sec"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="shead"&gt;&lt;div&gt;&lt;h2&gt;Add New Route&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;Export GPX from BRouter &amp;middot; drop here &amp;middot; answer a few questions&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="sbody"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="stbar" class="stbar"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="dropzone" id="dz"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"&gt;&lt;path d="M18 4v18M10 14l8 8 8-8M6 28h24"&gt;&lt;/path&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Drop your GPX file here&lt;/p&gt;&lt;span&gt;or click to choose a file&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;input type="file" id="gfi" accept=".gpx"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="drop-ov"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"&gt;&lt;path d="M32 8v32M20 28l12 12 12-12M12 48h40"&gt;&lt;/path&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="font-family:DM Sans,sans-serif;font-size:22px;font-weight:600;color:white;"&gt;Drop GPX file here&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="font-family:DM Sans,sans-serif;font-size:14px;color:rgba(255,255,255,.7);"&gt;Release to add route&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="wizard" id="wiz"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">var ROUTES=[];</p>
+<p class="p1">var POI_TYPES=[{val:"winery",label:"Winery"},{val:"restaurant",label:"Restaurant"},{val:"cafe",label:"Cafe"},{val:"brewery",label:"Brewery"},{val:"poi",label:"Landmark"}];</p>
+<p class="p1">var DIFF_LABELS={easy:"Easy","easy-moderate":"Easy / Moderate",moderate:"Moderate",hard:"Hard"};</p>
+<p class="p1">var COLORS=["#B85C38","#5A7A47","#405B30","#2E6B9E","#8E44AD","#D35400","#1A7A6E","#7B2D2D"];</p>
+<p class="p1">var openEditId=null,wizData=null,selColor="#B85C38",selDiff="easy-moderate",dragSrc=null;</p>
+<p class="p2"><br></p>
+<p class="p1">async function loadRoutes(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>try{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var r=await fetch('/routes.json?t='+Date.now());</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!r.ok)throw 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ROUTES=await r.json();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}catch(e){ROUTES=[];}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderRoutes();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function saveRoutesJson(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(openEditId!==null){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var r=ROUTES.find(function(x){return x.id===openEditId;});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(r)flushEdit(r);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var blob=new Blob([JSON.stringify(ROUTES,null,2)],{type:'application/json'});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var url=URL.createObjectURL(blob);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var a=document.createElement('a');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>a.href=url;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>a.download='routes.json';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.body.appendChild(a);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>a.click();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.body.removeChild(a);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>URL.revokeObjectURL(url);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>showStatus('routes.json downloaded — drag it into Netlify to deploy.','info');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function showStatus(msg,type){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var el=document.getElementById('stbar');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.textContent=msg;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.className='stbar show '+(type||'info');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>clearTimeout(el._t);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(msg)el._t=setTimeout(function(){el.classList.remove('show');},6000);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function esc(s){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return String(s||'').replace(/&amp;/g,'&amp;amp;').replace(/&lt;/g,'&amp;lt;').replace(/&gt;/g,'&amp;gt;').replace(/"/g,'&amp;quot;');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderRoutes(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var c=document.getElementById('arl');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!ROUTES.length){c.innerHTML='&lt;div class="empty"&gt;No routes yet. Drop a GPX file below to add one.&lt;/div&gt;';return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>c.innerHTML='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ROUTES.forEach(function(r,idx){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var row=document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.className='arow';row.draggable=true;row.dataset.idx=idx;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var dk=r.difficulty||'easy';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var vp=(r.pois||[]).filter(function(p){return p.visible!==false;}).length;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var io=(openEditId===r.id);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.innerHTML=</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="dhdl"&gt;&amp;#8903;&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="rcbar" style="background:'+r.color+'"&gt;&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="arinfo"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'&lt;div class="arname"&gt;'+esc(r.name)+'&lt;span class="dchip d-'+dk+'"&gt;'+DIFF_LABELS[dk]+'&lt;/span&gt;&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'&lt;div class="armeta"&gt;'+r.distance+' km &amp;middot; '+r.estTime+' &amp;middot; '+r.climb+'m ascent &amp;middot; '+vp+' visible stops&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">        </span>buildEP(r,idx,io)+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="aracts"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'&lt;button class="btn" onclick="toggleEdit('+r.id+')"&gt;Edit&lt;/button&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'&lt;button class="btn btn-red" onclick="deleteRoute('+r.id+')"&gt;Delete&lt;/button&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.addEventListener('dragstart',function(e){dragSrc=idx;e.dataTransfer.effectAllowed='move';});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.addEventListener('dragover',function(e){e.preventDefault();row.classList.add('drag-over');});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.addEventListener('dragleave',function(){row.classList.remove('drag-over');});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>row.addEventListener('drop',function(e){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>e.preventDefault();row.classList.remove('drag-over');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(dragSrc===null||dragSrc===idx)return;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var m=ROUTES.splice(dragSrc,1)[0];ROUTES.splice(idx,0,m);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>dragSrc=null;renderRoutes();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>c.appendChild(row);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(openEditId!==null){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var r=ROUTES.find(function(x){return x.id===openEditId;});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(r)wireEP(r);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function buildEP(r,idx,io){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var h='&lt;div class="epanel'+(io?' open':'')+'" id="ep-'+r.id+'"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="erow"&gt;&lt;label&gt;Route name&lt;/label&gt;&lt;input id="en-'+r.id+'" value="'+esc(r.name)+'"&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="erow"&gt;&lt;label&gt;Description&lt;/label&gt;&lt;textarea id="ed-'+r.id+'"&gt;'+esc(r.description)+'&lt;/textarea&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="erow"&gt;&lt;label&gt;Difficulty&lt;/label&gt;&lt;div class="brow"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>['easy','easy-moderate','moderate','hard'].forEach(function(d){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h+='&lt;button class="obtn'+(r.difficulty===d?' sel':'')+'" data-rid="'+r.id+'" data-diff="'+d+'"&gt;'+DIFF_LABELS[d]+'&lt;/button&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="erow"&gt;&lt;label&gt;Colour&lt;/label&gt;&lt;div class="csw"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>COLORS.forEach(function(c){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h+='&lt;div class="cswatch'+(r.color===c?' sel':'')+'" data-rid="'+r.id+'" data-color="'+c+'" style="background:'+c+'"&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="erow"&gt;&lt;div class="poi-ed-hdr"&gt;&lt;label&gt;Points of interest&lt;/label&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;div class="pvis-all-btns"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;button class="pvis-all-btn" data-allri="'+idx+'" data-show="1"&gt;Show all&lt;/button&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;button class="pvis-all-btn" data-allri="'+idx+'" data-show="0"&gt;Hide all&lt;/button&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;/div&gt;&lt;/div&gt;&lt;div class="poi-ed-list"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>(r.pois||[]).forEach(function(p,pi){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var km=p.km===0?'Start':p.km+' km';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var vis=p.visible!==false;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h+='&lt;div class="poi-ed-item"&gt;&lt;div class="poi-ed-top"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="poi-ed-name"&gt;'+esc(p.name)+'&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="poi-ed-km"&gt;'+km+'&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="poi-vis-toggle"&gt;&lt;label class="toggle"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'&lt;input type="checkbox"'+(vis?' checked':'')+' data-ri="'+idx+'" data-pi="'+pi+'"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'&lt;span class="tslider"&gt;&lt;/span&gt;&lt;/label&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'&lt;span class="vis-lbl"&gt;'+(vis?'Shown':'Hidden')+'&lt;/span&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;/div&gt;&lt;/div&gt;&lt;div class="poi-ed-types"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>POI_TYPES.forEach(function(t){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>h+='&lt;button class="ptbtn'+(p.type===t.val?' sel':'')+'" data-ri="'+idx+'" data-pi="'+pi+'" data-type="'+t.val+'"&gt;'+t.label+'&lt;/button&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h+='&lt;/div&gt;&lt;div class="poi-ed-desc"&gt;&lt;input id="pdesc-'+r.id+'-'+pi+'" value="'+esc(p.desc||'')+'" placeholder="POI description..."&gt;&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return h;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function wireEP(r){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('[data-diff][data-rid="'+r.id+'"]').forEach(function(b){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>b.onclick=function(){r.difficulty=b.dataset.diff;renderRoutes();};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('[data-color][data-rid="'+r.id+'"]').forEach(function(s){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>s.onclick=function(){r.color=s.dataset.color;renderRoutes();};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('input[data-ri][data-pi]').forEach(function(cb){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cb.onchange=function(){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var ri=parseInt(cb.dataset.ri),pi=parseInt(cb.dataset.pi);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ROUTES[ri].pois[pi].visible=cb.checked;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>cb.closest('.poi-vis-toggle').querySelector('.vis-lbl').textContent=cb.checked?'Shown':'Hidden';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.ptbtn[data-ri][data-pi]').forEach(function(b){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>b.onclick=function(){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var ri=parseInt(b.dataset.ri),pi=parseInt(b.dataset.pi);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ROUTES[ri].pois[pi].type=b.dataset.type;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>b.closest('.poi-ed-types').querySelectorAll('.ptbtn').forEach(function(x){x.classList.remove('sel');});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>b.classList.add('sel');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('[data-allri]').forEach(function(b){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>b.onclick=function(){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var ri=parseInt(b.dataset.allri),show=b.dataset.show==='1';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ROUTES[ri].pois.forEach(function(p){p.visible=show;});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderRoutes();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function flushEdit(r){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var n=document.getElementById('en-'+r.id),d=document.getElementById('ed-'+r.id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(n)r.name=n.value.trim()||r.name;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(d)r.description=d.value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>(r.pois||[]).forEach(function(p,pi){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var el=document.getElementById('pdesc-'+r.id+'-'+pi);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(el)p.desc=el.value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function toggleEdit(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(openEditId!==null&amp;&amp;openEditId!==id){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var p=ROUTES.find(function(x){return x.id===openEditId;});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(p)flushEdit(p);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>openEditId=(openEditId===id)?null:id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderRoutes();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function deleteRoute(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!confirm('Delete this route?'))return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ROUTES=ROUTES.filter(function(r){return r.id!==id;});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(openEditId===id)openEditId=null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderRoutes();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function handleGpx(file){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var reader=new FileReader();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>reader.onload=function(e){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>try{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var xml=new DOMParser().parseFromString(e.target.result,'text/xml');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var trkpts=xml.querySelectorAll('trkpt');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(!trkpts.length){showStatus('No track points found in GPX.','error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var coords=[],elKm=[],elM=[],dist=0,prev=null;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>trkpts.forEach(function(pt){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var lat=parseFloat(pt.getAttribute('lat'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var lng=parseFloat(pt.getAttribute('lon'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var ele=parseFloat((pt.querySelector('ele')||{}).textContent||'0');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(prev)dist+=Math.hypot(lat-prev[0],lng-prev[1])*111.32;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>coords.push([+lat.toFixed(5),+lng.toFixed(5)]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>elKm.push(+dist.toFixed(2));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>elM.push(+ele.toFixed(1));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>prev=[lat,lng];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var climb=0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>for(var i=1;i&lt;elM.length;i++){var d=elM[i]-elM[i-1];if(d&gt;0)climb+=d;}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var wpts=xml.querySelectorAll('wpt');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var pois=[{name:'Start',type:'poi',desc:'',lat:coords[0][0],lng:coords[0][1],km:0,visible:true}];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>wpts.forEach(function(wpt){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var wlat=parseFloat(wpt.getAttribute('lat'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var wlng=parseFloat(wpt.getAttribute('lon'));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var wname=(wpt.querySelector('name')||{}).textContent||'Stop';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var wdesc=(wpt.querySelector('desc')||{}).textContent||'';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var nearest=0,nearDist=Infinity;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>coords.forEach(function(c,i){var dd=Math.hypot(c[0]-wlat,c[1]-wlng);if(dd&lt;nearDist){nearDist=dd;nearest=i;}});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>pois.push({name:wname.trim(),type:'poi',desc:wdesc.trim(),lat:+wlat.toFixed(6),lng:+wlng.toFixed(6),km:+(elKm[nearest]||0).toFixed(1),visible:false});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>pois.sort(function(a,b){return a.km-b.km;});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var em=Math.round(dist/15*60);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>wizData={coords:coords,elevKm:elKm,elevM:elM,distance:+dist.toFixed(1),climb:Math.round(climb),estTime:Math.floor(em/60)+'h '+(em%60)+'m',pois:pois,filename:file.name};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>selColor=COLORS[ROUTES.length%COLORS.length];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>selDiff='easy-moderate';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>renderWizard();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}catch(err){showStatus('Error parsing GPX: '+err.message,'error');}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>reader.readAsText(file);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderWizard(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var wiz=document.getElementById('wiz');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>wiz.className='wizard show';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var pois=wizData.pois;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var h='&lt;hr class="div"&gt;&lt;div class="pinfo"&gt;&lt;strong&gt;GPX loaded:&lt;/strong&gt; '+esc(wizData.filename)+'&lt;br&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Distance: &lt;strong&gt;'+wizData.distance+' km&lt;/strong&gt; &amp;nbsp;&amp;middot;&amp;nbsp; '+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Ascent: &lt;strong&gt;'+wizData.climb+'m&lt;/strong&gt; &amp;nbsp;&amp;middot;&amp;nbsp; '+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Est. time: &lt;strong&gt;'+wizData.estTime+'&lt;/strong&gt; &amp;nbsp;&amp;middot;&amp;nbsp; '+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Waypoints: &lt;strong&gt;'+(pois.length-1)+'&lt;/strong&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="wstep"&gt;&lt;label class="wlbl"&gt;Route name&lt;/label&gt;&lt;input type="text" class="winput" id="wname" placeholder="e.g. Cellar Door Explorer"&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="wstep"&gt;&lt;label class="wlbl"&gt;Short description&lt;/label&gt;&lt;textarea class="winput wtxt" id="wdesc" placeholder="A few sentences about this route..."&gt;&lt;/textarea&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="wstep"&gt;&lt;label class="wlbl"&gt;Difficulty&lt;/label&gt;&lt;div class="brow" id="wdiff"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>['easy','easy-moderate','moderate','hard'].forEach(function(d){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h+='&lt;button class="obtn'+(d===selDiff?' sel':'')+'" data-val="'+d+'"&gt;'+DIFF_LABELS[d]+'&lt;/button&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="wstep"&gt;&lt;label class="wlbl"&gt;Route colour&lt;/label&gt;&lt;div class="csw" id="wcolors"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>COLORS.forEach(function(c){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h+='&lt;div class="cswatch'+(c===selColor?' sel':'')+'" data-color="'+c+'" style="background:'+c+'"&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="wstep"&gt;&lt;label class="wlbl"&gt;Points of interest&lt;/label&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;div style="display:flex;gap:8px;margin-bottom:8px;"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;button type="button" class="btn" onclick="selAllWizPois(true)"&gt;Show all&lt;/button&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;button type="button" class="btn" onclick="selAllWizPois(false)"&gt;Hide all&lt;/button&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;/div&gt;&lt;div class="wpoied" id="wpoied"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>pois.forEach(function(p,i){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var km=p.km===0?'Start':p.km+' km';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h+='&lt;div class="wpoi"&gt;&lt;div class="wpoi-top"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="wpoi-name"&gt;'+esc(p.name)+'&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;div class="wpoi-km"&gt;'+km+'&lt;/div&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;label class="toggle"&gt;&lt;input type="checkbox"'+(p.visible?' checked':'')+' data-wpi-vis="'+i+'"&gt;&lt;span class="tslider"&gt;&lt;/span&gt;&lt;/label&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;span class="vis-lbl" id="wvl-'+i+'"&gt;'+(p.visible?'Shown':'Hidden')+'&lt;/span&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">      </span>'&lt;/div&gt;&lt;div class="wpoi-types" id="wpt-'+i+'"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>POI_TYPES.forEach(function(t){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>h+='&lt;button class="ptbtn'+(p.type===t.val?' sel':'')+'" data-wpi="'+i+'" data-type="'+t.val+'"&gt;'+t.label+'&lt;/button&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>h+='&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>h+='&lt;div class="addrow"&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;button class="addroute-btn" id="addrbtn"&gt;Add Route to App&lt;/button&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;button class="cancel-btn" id="cancelbtn"&gt;Cancel&lt;/button&gt;'+</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>wiz.innerHTML=h;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('wdiff').querySelectorAll('.obtn').forEach(function(b){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>b.onclick=function(){selDiff=b.dataset.val;document.getElementById('wdiff').querySelectorAll('.obtn').forEach(function(x){x.classList.remove('sel');});b.classList.add('sel');};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('wcolors').querySelectorAll('.cswatch').forEach(function(s){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>s.onclick=function(){selColor=s.dataset.color;document.getElementById('wcolors').querySelectorAll('.cswatch').forEach(function(x){x.classList.remove('sel');});s.classList.add('sel');};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('[data-wpi-vis]').forEach(function(cb){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cb.onchange=function(){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var i=parseInt(cb.getAttribute('data-wpi-vis'));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>wizData.pois[i].visible=cb.checked;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('wvl-'+i).textContent=cb.checked?'Shown':'Hidden';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.ptbtn[data-wpi]').forEach(function(b){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>b.onclick=function(){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var i=parseInt(b.dataset.wpi);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>wizData.pois[i].type=b.dataset.type;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('wpt-'+i).querySelectorAll('.ptbtn').forEach(function(x){x.classList.remove('sel');});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>b.classList.add('sel');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('addrbtn').onclick=addRoute;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('cancelbtn').onclick=function(){wizData=null;document.getElementById('wiz').className='wizard';document.getElementById('wiz').innerHTML='';};</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function selAllWizPois(show){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!wizData)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>wizData.pois.forEach(function(p,i){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>p.visible=show;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var cb=document.querySelector('[data-wpi-vis="'+i+'"]');if(cb)cb.checked=show;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var lbl=document.getElementById('wvl-'+i);if(lbl)lbl.textContent=show?'Shown':'Hidden';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function addRoute(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var name=(document.getElementById('wname').value||'').trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var desc=(document.getElementById('wdesc').value||'').trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!name){showStatus('Please enter a route name.','warn');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var maxId=ROUTES.reduce(function(m,r){return Math.max(m,r.id||0);},0);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ROUTES.push({</p>
+<p class="p1"><span class="Apple-converted-space">    </span>id:maxId+1,name:name,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tagline:desc.split('.')[0]||name,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>difficulty:selDiff,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>distance:wizData.distance,climb:wizData.climb,estTime:wizData.estTime,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>description:desc,color:selColor,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>coords:wizData.coords,elevKm:wizData.elevKm,elevM:wizData.elevM,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>pois:wizData.pois</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>wizData=null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('wiz').className='wizard';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('wiz').innerHTML='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderRoutes();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>showStatus('Route "'+name+'" added. Click Download routes.json to save.','info');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">(function(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var dz=document.getElementById('dz'),gfi=document.getElementById('gfi'),ov=document.getElementById('drop-ov');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>dz.onclick=function(){gfi.click();};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>gfi.onchange=function(){if(gfi.files[0])handleGpx(gfi.files[0]);gfi.value='';};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var dc=0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window.addEventListener('dragenter',function(e){if([...e.dataTransfer.items].some(function(i){return i.kind==='file';})){dc++;ov.style.display='flex';}});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window.addEventListener('dragleave',function(){dc--;if(dc&lt;=0){dc=0;ov.style.display='none';}});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window.addEventListener('dragover',function(e){e.preventDefault();});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window.addEventListener('drop',function(e){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>e.preventDefault();dc=0;ov.style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var f=e.dataTransfer.files[0];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(f&amp;&amp;f.name.endsWith('.gpx'))handleGpx(f);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>else if(f)showStatus('Please drop a .gpx file.','warn');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('active');});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>dz.addEventListener('dragleave',function(){dz.classList.remove('active');});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('active');var f=e.dataTransfer.files[0];if(f)handleGpx(f);});</p>
+<p class="p1">})();</p>
+<p class="p2"><br></p>
+<p class="p1">loadRoutes();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
